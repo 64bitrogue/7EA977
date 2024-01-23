@@ -36,7 +36,7 @@ if (isset($_POST['edit'])) {
         $errors['weight'] = "Gross weight cannot be negative or zero.";
     }
 
-    if (($payment != "CASH") || ($payment != "INSTALLMENT")) {
+    if (($payment != "CASH") && ($payment != "INSTALLMENT")) {
         $errors['payment'] = "Please select a valid mode of payment.";
     }
 
