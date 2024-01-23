@@ -1,0 +1,6 @@
+CREATE TABLE storage(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    company VARCHAR(255) NOT NULL,
+    weight INT NOT NULL,
+    payment VARCHAR(255) NOT NULL
+);
