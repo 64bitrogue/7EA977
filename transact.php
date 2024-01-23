@@ -40,7 +40,7 @@ $total = null;
                 if ($storage_list) {
                     while ($storage_row = mysqli_fetch_assoc($storage_list)) {
                         ?>
-                        <option value="<?= $storage_row['id'] ?>" <?= $id == $storage_row['id'] ? 'selected' : '' ?> >
+                        <option value="<?= $storage_row['id'] ?>" <?= $storage_row['id'] == $id ? 'selected' : '' ?>>
                         <?= $storage_row['id'] ?> - <?= $storage_row['company'] ?> (<?= number_format($storage_row['weight'], 0) ?> kg<?= $storage_row['weight'] > 1 ? 's' : '' ?>)
                         </option>
                         <?php
@@ -51,7 +51,7 @@ $total = null;
         </div>
         <div>
             <label for="date">Transaction Date</label>
-            <input type="date" name="date" id="date">
+            <input value="<?= $date ?>" type="date" name="date" id="date">
         </div>
         <button type="submit" name="submit">Submit</button>
     </form>
@@ -90,6 +90,7 @@ $total = null;
                 $remaining_weight -= 1000;
             } else {
                 $total = $remaining_weight * 50;
+                $remaining_weight = 0;
             }
 
             if ($remaining_weight > 1500) {
@@ -97,6 +98,7 @@ $total = null;
                 $remaining_weight -= 1500;
             } else {
                 $total += $remaining_weight * 75;
+                $remaining_weight = 0;
             }
 
             if ($remaining_weight > 0) {
