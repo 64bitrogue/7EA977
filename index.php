@@ -33,7 +33,7 @@ $result = mysqli_query($conn, $query);
     </div>
     <hr>
     <div>
-        <form action="index.php">
+        <form action="index.php" method="get">
             <input value="<?= $search ?>" type="text" name="search" id="search">
             <button type="submit">Search</button>
         </form>
@@ -58,13 +58,19 @@ $result = mysqli_query($conn, $query);
                             <td><?= $row['id'] ?></td>
                             <td><?= $row['company'] ?></td>
                             <td><?= number_format($row['weight'], 0) ?></td>
-                            <td><?= $row['payment'] ?></td>
                             <td>
-                                <a href="edit.php?id=<?= $row['id'] ?>">Edit</a>
-                                <form action="delete.php" method="post">
-                                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
-                                    <button name="delete" type="submit">Delete</button>
-                                </form>
+                                <span class="<?= $row['payment'] == "CASH" ? 'cash' : 'installment' ?>">
+                                <?= $row['payment'] ?>
+                                </span>
+                            </td>
+                            <td>
+                                <div class="actions">
+                                    <a href="edit.php?id=<?= $row['id'] ?>">Edit</a>
+                                    <form action="delete.php" method="post">
+                                        <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                                        <button name="delete" type="submit">Delete</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                         <?php

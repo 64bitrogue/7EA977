@@ -12,6 +12,8 @@ $weight = null;
 $payment = null;
 
 if (isset($_POST['add'])) {
+    // Sanitize user input
+
     $company = sanitize_input($_POST['company']);
     $weight = sanitize_input($_POST['weight']);
     $payment = sanitize_input($_POST['payment']);
@@ -43,6 +45,7 @@ if (isset($_POST['add'])) {
     if (count($errors) == 0) {
         $query = "INSERT INTO storage (company, weight, payment) VALUES ('$company', '$weight', '$payment')";
 
+        // If query is successful, close connection. Otherwise, print error.
         if ($conn->query($query)) {
             $conn->close();
             header("Location: index.php");
