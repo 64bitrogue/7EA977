@@ -10,7 +10,7 @@ $query = null;
 if (isset($_GET['search']) && strlen($_GET['search']) > 0) {
     $search = trim(htmlspecialchars(stripslashes($_GET['search'])));
 
-    $query = "SELECT * FROM storage WHERE id LIKE '%$search%' OR WHERE company LIKE '%$search%' OR WHERE payment LIKE '%$search%'";
+    $query = "SELECT * FROM storage WHERE id LIKE '%$search%' OR company LIKE '%$search%' OR payment LIKE '%$search%'";
 } else {
     $query = "SELECT * FROM storage";
 }
@@ -34,7 +34,7 @@ $result = mysqli_query($conn, $query);
     <hr>
     <div>
         <form action="index.php">
-            <input type="text" name="search" id="search">
+            <input value="<?= $search ?>" type="text" name="search" id="search">
             <button type="submit">Search</button>
         </form>
     </div>

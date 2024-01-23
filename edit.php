@@ -11,9 +11,8 @@ $company = null;
 $weight = null;
 $payment = null;
 
-$id = sanitize_input($_GET['id']);
-
 if (isset($_POST['edit'])) {
+    $id = sanitize_input($_POST['id']);
     $company = sanitize_input($_POST['company']);
     $weight = sanitize_input($_POST['weight']);
     $payment = sanitize_input($_POST['payment']);
@@ -55,6 +54,7 @@ if (isset($_POST['edit'])) {
 
 
 } else {
+    $id = sanitize_input($_GET['id']);
     $query = "SELECT * FROM storage where id = '$id'";
 
     $result = mysqli_query($conn, $query);
