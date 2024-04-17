@@ -3,6 +3,7 @@
 // This file allows user to delete records.
 
 include "connect.php";
+include "functions.php";
 
 $id = sanitize_input($_POST['id']);
 
