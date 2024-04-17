@@ -51,8 +51,6 @@ if (isset($_POST['edit'])) {
             echo "Cannot edit record. Error: " . $conn->error;
         }
     }
-
-
 } else {
     $id = sanitize_input($_GET['id']);
     $query = "SELECT * FROM storage where id = '$id'";

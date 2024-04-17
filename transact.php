@@ -8,6 +8,7 @@ include "functions.php";
 $storage_query = "SELECT * FROM storage";
 $storage_list = mysqli_query($conn, $storage_query);
 
+
 $id = null;
 $date = null;
 
@@ -81,34 +82,68 @@ $total = null;
                 $free = 500;
             }
 
+
+            // If weekdays: free 500 kilos
+            // If weekends: free 1,000 kilos
+            
             // Compute total cost
 
-            $remaining_weight = $weight - $free;
-
-            if ($remaining_weight > 1000) {
-                $total = 1000 * 50;
-                $remaining_weight -= 1000;
-            } else {
-                $total = $remaining_weight * 50;
-                $remaining_weight = 0;
+            $remaining_weight = null;
+            $total = 0;
+            // Deduct free weight
+            if ($free == 1000) {
+                if ($weight < 1000) {
+                    $remaining_weight = 0;
+                } else {
+                    $remaining_weight = $weight - $free;
+                }
+            } else if ($free == 500) {
+                if ($weight < 500) {
+                    $remaining_weight = 0;
+                } else {
+                    $remaining_weight = $weight - $free;
+                }
             }
 
-            if ($remaining_weight > 1500) {
-                $total += 1500 * 75;
-                $remaining_weight -= 1500;
-            } else {
-                $total += $remaining_weight * 75;
-                $remaining_weight = 0;
+            // First 1,000 kgs is 50/kilo
+
+            if ($remaining_weight > 0) {
+                if ($remaining_weight < 1000) {
+                    $total += $remaining_weight * 50;
+                    $remaining_weight = 0;
+                } else {
+                    $total += 1000 * 50;
+                    $remaining_weight -= 1000;
+                }
             }
+
+            // Next 1,500 kgs is 75/kilo
+
+            if ($remaining_weight > 0) {
+                if ($remaining_weight < 1500) {
+                    $total += $remaining_weight * 75;
+                    $remaining_weight = 0;
+                } else {
+                    $total += 1500 * 75;
+                    $remaining_weight -= 1500;
+                }
+            }
+
+            // Remaining kilograms is 100/kilo
 
             if ($remaining_weight > 0) {
                 $total += $remaining_weight * 100;
+                $remaining_weight = 0;
             }
 
+            // Check payment method
+
             if ($payment == "CASH") {
-                $total -= $total * 0.05;
+                // If cash, 5% discount
+                $total -= ($total * 0.05);
             } else if ($payment == "INSTALLMENT") {
-                $total += $total * 0.02;
+                // If installment, 2% surcharge
+                $total += ($total * 0.02);
             }
 
             ?>
